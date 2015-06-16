@@ -1,0 +1,5 @@
+#!/bin/bash
+set -e
+
+echo "Step1: Test for nessus install"
+docker run -t -i sometheycallme/docker-nessus ls /opt/nessus | grep README

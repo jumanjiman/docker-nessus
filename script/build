@@ -1,0 +1,15 @@
+#!/bin/bash
+set -e
+
+options="--rm"
+echo $@ | grep '\--no-cache' &> /dev/null && options="$options --no-cache" || :
+
+echo "Build images."
+docker build $options -t sometheycallme/docker-nessus .
+
+echo "Show image sizes."
+docker images | egrep '^nessus\b' | sort
+
+echo
+echo "WARN: you should docker tag the docker-nessus image."
+echo
