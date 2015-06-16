@@ -14,12 +14,13 @@ MAINTAINER Tim Kropp <timkropp77@gmail.com>
 # Install dependencies.
 RUN rpm -Uvh http://dl.fedoraproject.org/pub/epel/6/x86_64/epel-release-6-8.noarch.rpm
 
-# Get splunk RPM
-# requires splunk account
-ADD http://downloads.nessus.org/nessus3dl.php?file=Nessus-6.3.7-es6.i386.rpm&licence_accept=yes&t=9bdd4aaf6bb049c9113b8d4287d27d18  /tmp/
-RUN ls -l /tmp
+# Need Nessus account RPM
+# ADD http://downloads.nessus.org/nessus3dl.php?file=Nessus-6.3.7-es6.i386.rpm&licence_accept=yes&t=9bdd4aaf6bb049c9113b8d4287d27d18  /tmp/
+# RUN ls -l /tmp
+# The above DL will only pull the PHP page (logon wall)
+# you need to pull the rpm locally
 
-# use default install /opt/splunk
+COPY Nessus-6.3.7-es6.i386.rpm /tmp/.
 RUN yum -y --nogpgcheck localinstall /tmp/Nessus-6.3.7-es6.i386.rpm
 
 # Remove yum metadata.
