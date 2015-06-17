@@ -5,4 +5,4 @@ echo "Step1: Test for nessus install"
 docker run -t -i sometheycallme/docker-nessus ls /opt/nessus/etc | grep nessus
 
 echo "Step2: Test to see that SSL is enabled by default"
-docker run -t -i sometheycallme/docker-nessus cat /opt/nessus/etc/nessus/nessusd.conf.imported | grep garbage
+docker run -t -i sometheycallme/docker-nessus cat /opt/nessus/etc/nessus/nessusd.conf.imported | grep strong
