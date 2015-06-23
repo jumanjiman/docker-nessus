@@ -28,4 +28,4 @@ RUN yum clean all
 
 # Start Nessus
 CMD service nessusd start
-EXPOSE -p 8834
+EXPOSE 8834
