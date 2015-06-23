@@ -27,5 +27,6 @@ RUN yum -y --nogpgcheck localinstall /tmp/Nessus-6.3.7-es6.i386.rpm
 RUN yum clean all
 
 # Start Nessus
-CMD service nessusd start
+ADD start.sh /usr/local/sbin/start.sh
+CMD ["/usr/local/sbin/start.sh"]
 EXPOSE 8834
