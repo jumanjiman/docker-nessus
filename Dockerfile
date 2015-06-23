@@ -25,3 +25,6 @@ RUN yum -y --nogpgcheck localinstall /tmp/Nessus-6.3.7-es6.i386.rpm
 
 # Remove yum metadata.
 RUN yum clean all
+
+# Start Nessus
+service nessusd start
