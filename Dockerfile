@@ -28,5 +28,5 @@ RUN (yum -y --nogpgcheck localinstall /tmp/Nessus-6.3.7-es6.i386.rpm || \
     yum clean all
 
 # Start Nessus
-CMD ["/opt/nessus/sbin/nessus-service"]
+ENTRYPOINT ["/opt/nessus/sbin/nessus-service"]
 EXPOSE 8834
