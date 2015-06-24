@@ -1,8 +1,14 @@
 #!/bin/bash
-set -e
+set -ex -o pipefail
 
-echo "Step1: Test for nessus install"
-docker run -t -i sometheycallme/docker-nessus ls /opt/nessus/etc | grep nessus
+echo "Step1: Test for basic nessus install"
+docker run -t -i --entrypoint bash sometheycallme/docker-nessus -c "ls /opt/nessus/etc" | grep nessus
 
-echo "Step2: Test to see that SSL is enabled by default"
-docker run -t -i sometheycallme/docker-nessus cat /opt/nessus/etc/nessus/nessusd.conf.imported | grep strong
+docker rm -f nessusd || :
+docker run -d --name nessusd -p 8834:8834 sometheycallme/docker-nessus
+
+# give nessus a few seconds to fully startup
+sleep 3
+
+echo "Step2: Test that after the docker build - the Nessus D is actually running"
+docker logs nessusd | grep '^nessusd'
