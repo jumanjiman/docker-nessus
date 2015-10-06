@@ -21,10 +21,10 @@ RUN yum -y install epel-release hostname && \
 # The above DL will only pull the PHP page (logon wall)
 # you need to pull the rpm locally
 
-COPY Nessus-6.3.7-es6.i386.rpm /tmp/
+COPY Nessus-6.4.3-es6.x86_64.rpm /tmp/
 # run the yum install twice as workaround for rpmdb checksum error with overlayfs
-RUN (yum -y --nogpgcheck localinstall /tmp/Nessus-6.3.7-es6.i386.rpm || \
-    yum -y --nogpgcheck localinstall /tmp/Nessus-6.3.7-es6.i386.rpm) && \
+RUN (yum -y --nogpgcheck localinstall /tmp/Nessus-6.4.3-es6.x86_64.rpm || \
+    yum -y --nogpgcheck localinstall /tmp/Nessus-6.4.3-es6.x86_64.rpm) && \
     yum clean all
 
 # Start Nessus
