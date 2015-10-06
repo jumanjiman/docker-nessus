@@ -23,8 +23,8 @@ RUN yum -y install epel-release hostname && \
 
 COPY Nessus-6.4.3-es6.x86_64.rpm /tmp/
 # run the yum install twice as workaround for rpmdb checksum error with overlayfs
-RUN (yum -y --nogpgcheck localinstall /tmp/Nessus-6.3.7-es6.i386.rpm || \
-    yum -y --nogpgcheck localinstall /tmp/Nessus-6.3.7-es6.i386.rpm) && \
+RUN (yum -y --nogpgcheck localinstall /tmp/Nessus-6.4.3-es6.x86_64.rpm || \
+    yum -y --nogpgcheck localinstall /tmp/Nessus-6.4.3-es6.x86_64.rpm) && \
     yum clean all
 
 # Start Nessus
