@@ -16,9 +16,11 @@ or git clone the [repo](https://github.com/cleanerbot/docker-nessus)
 
 ```git clone git@github.com:cleanerbot/docker-nessus.git```
 
-<b>2) Start the container running with static mac assigned ```nessus-unlicensed```</b>
+If you clone the repo,  you must build the image (go into the repo directory and ```docker build .```
 
-replace <spoofed> with a unique static unicast MAC
+<b>2) Start the container running with static mac assigned - call it ```nessus-unlicensed```</b>
+
+replace <spoofed> with your own uniquely assigned static unicast MAC
 
 ```docker run -d --name nessus-unlicensed --mac-address <spoofed> -p 8834:8834 sometheycallme:docker-nessus```
 
