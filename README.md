@@ -1,4 +1,4 @@
-<img src="https://raw.github.com/cleanerbot/docker-nessus/master/images/tenable-docker.png" width="250" height="250" />
+<img src="https://raw.githubusercontent.com/cleanerbot/docker-nessus/images/images/tenable-docker.png" width="250" height="250" />
 
 # docker-nessus
 [![](https://badge.imagelayers.io/sometheycallme/docker-nessus.svg)](https://imagelayers.io/?images=cleanerbot/docker-nessus:latest 'View image size and layers')&nbsp;
