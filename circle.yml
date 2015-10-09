@@ -29,4 +29,7 @@ deployment:
       - docker tag sometheycallme/docker-nessus sometheycallme/docker-nessus:0.0.1-${CIRCLE_SHA1:0:7}
       - docker push sometheycallme/docker-nessus:0.0.1-${CIRCLE_SHA1:0:7}
       - docker push sometheycallme/docker-nessus:latest
+      - docker tag sometheycallme/docker-nessus-data sometheycallme/docker-nessus-data:0.0.1${CIRCLE_SHA1:0:7}
+      - docker push sometheycallme/docker-nessus-data:0.0.1-${CIRCLE_SHA1:0:7}
+      - docker push sometheycallme/docker-nessus-data:latest
       - docker logout

@@ -1,11 +1,16 @@
 #!/bin/bash
 set -ex -o pipefail
 
-echo "Step1: Test for basic nessus install"
+echo "Step1: Test for basic nessus install (we remove it in step 3)"
 docker run -t -i --entrypoint bash sometheycallme/docker-nessus -c "ls /opt/nessus/etc" | grep nessus
 
-docker rm -f nessusd || :
-docker run -d --name nessusd -p 8834:8834 sometheycallme/docker-nessus
+echo "Step2: Test that the nessus-data image is present"
+docker images | grep nessus-data
+
+echo "Step 3: Remove an existing nessus image (if its there) and run a new one mounting volumes"
+docker rm -f nessus || :
+docker run -d --name nessusd -p 8834:8834 --mac-address 02:42:ac:11:00:01 --volumes-from nessus-data sometheycallme/docker-nessus 
+
 
 # give nessus a few seconds to fully startup
 sleep 3
