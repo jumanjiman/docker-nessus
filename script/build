@@ -5,13 +5,13 @@ options="--rm"
 echo $@ | grep '\--no-cache' &> /dev/null && options="$options --no-cache" || :
 
 echo "Build Nessus-data image."
-docker build $options -t sometheycallme/docker-nessus .
+docker build $options -t sometheycallme/docker-nessus-data .
 
 echo "Check for image."
 docker images | egrep '^nessus\b' | sort
 
 echo "Create Nessus-data image."
-docker create -v /opt/nessus --name nessus-data sometheycallme/docker-nessus-data 
+docker create -v /opt/nessus --name nessus-data sometheycallme/docker-nessus-data .
 
 echo "Build Nessus image."
 docker build $options -t sometheycallme/docker-nessus .
