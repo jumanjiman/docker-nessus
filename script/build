@@ -8,7 +8,7 @@ echo "Build Nessus image."
 docker build $options -t sometheycallme/docker-nessus .
 
 echo "Build Nessus-data image."
-docker build $options -t sometheycallme/docker-nessus-data .
+docker build -t sometheycallme/docker-nessus-data .
 
 echo "Show image sizes."
 docker images | egrep '^nessus\b' | sort
