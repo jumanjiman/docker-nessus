@@ -9,7 +9,7 @@ docker images | grep nessus-data
 
 echo "Step 3: Remove an existing nessus image (if its there) and run a new one mounting volumes"
 docker rm -f nessus || :
-docker run -d --name nessusd -p 8834:8834 --mac-address 02:42:ac:11:00:01 --volumes-from sometheycallme/docker-nessus-data
+docker run -d --name nessusd -p 8834:8834 --mac-address 02:42:ac:11:00:01 --volumes-from nessus-data sometheycallme/docker-nessus-data
 
 
 # give nessus a few seconds to fully startup
