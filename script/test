@@ -6,14 +6,15 @@ docker run -t -i --entrypoint bash sometheycallme/docker-nessus -c "ls /opt/ness
 
 echo "Step2: Test that the nessus-data image is present"
 docker images | grep nessus-data
+echo
 
 echo "Step 3: Remove an existing nessus image (if its there) and run a new one mounting volumes"
 docker rm -f nessus || :
-docker run -d --name nessusd -p 8834:8834 --mac-address 02:42:ac:11:00:01 --volumes-from nessus-data sometheycallme/docker-nessus-data
-
+docker run -d --name nessusd -p 8834:8834 --mac-address 02:42:ac:11:00:01 --volumes-from nessus-data sometheycallme/docker-nessus
+echo
 
 # give nessus a few seconds to fully startup
 sleep 3
 
-echo "Step2: Test that after the docker build - the Nessus D is actually running"
+echo "Step4: Test that after the docker build - the Nessus D is actually running"
 docker logs nessusd | grep '^nessusd'
