@@ -86,9 +86,9 @@ nessus                        licensed            d05e0a602768        7 minutes 
 
 <b>5) Run the newly created container</b>
 
-Replace <spoofed> with a unique unicast mac-address for your organization
+Suppliy the SAME unique unicast mac-address for that you supplied in step 2. your organization.  for example, we used ```02:42:ac:11:00:01``` for our procedures.
 
-```docker run -d --name nessus-unlicensed -p 8834:8834 --mac-address <spoofed> --volumes-from nessus-data sometheycallme/docker-nessus```
+```docker run -d --name nessus-unlicensed -p 8834:8834 --mac-address 02:42:ac:11:00:01 --volumes-from nessus-data sometheycallme/docker-nessus```
 
 <b>6) Creating a production container</b>
 
