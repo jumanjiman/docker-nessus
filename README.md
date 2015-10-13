@@ -36,12 +36,22 @@ Create the data volume image and build the nessusd image
 ```shell
 # in the nessus-data folder of the repository
 cd /docker-nessus/nessus-data
-docker create .
+docker build .
+# replace IMAGE[:TAG] with nessus-data 
+# use your registryhost/username
+docker tag IMAGE[:TAG] [REGISTRYHOST/][USERNAME/]NAME[:TAG]
+docker create --name nessus-data <nessus-data-image-name> true
 
 # in the root of the repository
 
 cd ..
 docker build .
+# replace IMAGE[:TAG] with nessus-unlicensed 
+# use your registryhost/username 
+docker tag IMAGE[:TAG] [REGISTRYHOST/][USERNAME/]NAME[:TAG]
+
+# Run it (unlicensed)
+docker run -d --name nessus-unlicensed -p 8834:8834 --mac-address 02:42:ac:11:00:01 --volumes-from nessus-data
 ```
 
 <b>2) Start the container running with static mac assigned ```nessus-unlicensed```</b>
