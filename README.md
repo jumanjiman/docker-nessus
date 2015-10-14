@@ -79,7 +79,7 @@ docker ps -a
 docker rm docker-unlicensed 
 ```
 
-<b>3)Build Nessus Unlicensed - with separate volume</b>
+<b>4)Build Nessus Unlicensed - with separate volume</b>
 
 ```shell
 
@@ -98,7 +98,7 @@ CONTAINER ID        IMAGE                                 COMMAND               
 
 ### Licensing Steps and saving the build
 
-<b>3) Add the license to the running nessus-unlicensed container</b>
+<b>5) Add the license to the running nessus-unlicensed container</b>
 
 You can use the [Nessus CLI](http://static.tenable.com/documentation/nessus_v6_command_line_reference.pdf) for offline registration or simply provide the unique key in the Web UI after Nessus starts.  
 
@@ -107,7 +107,7 @@ We used the Web UI.  (https://<yournessushost>:8834)
 Either way you will need to register.
 
 
-<b>4) Stop the container and commit the changes </b>
+<b>6) Stop the container and commit the changes </b>
 
 Name the newly licensed container ```nessus:licensed``` and use ```docker images``` command to confirm its creation.  This new container will not be pushed to a public repository.  It will be used in a private repository as our own properly licensed container.
 
@@ -130,7 +130,7 @@ REPOSITORY                    TAG                 IMAGE ID            CREATED   
 nessus                        licensed            d05e0a602768        7 minutes ago       3.87 GB
 ```
 
-<b>5) Run the newly created container</b>
+<b>7) Run the newly created container</b>
 
 Suppliy the SAME unique unicast mac-address for that you supplied in step 2.  For example, we used ```02:42:ac:11:00:01``` for our procedures.
 
@@ -138,7 +138,7 @@ Suppliy the SAME unique unicast mac-address for that you supplied in step 2.  Fo
 
 
 
-### Existing Nessus installations
+## Existing Nessus installations
 
 These procedures cover the data necessary to migrate existing nessus configurations into the data volume, similar to the procedures outlined above.
 
