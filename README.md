@@ -59,9 +59,11 @@ cd docker-nessus
 cd nessus-data
 
 # copy over needed CI's from the created image
-docker cp docker-unlicensed:/opt/nessus/sbin .
-docker cp docker-unlicensed:/opt/nessus/var .
-docker cp docker-unlicensed:/opt/nessus/etc .
+# provide the container ID from docker ps -a output
+
+docker cp 5843be44065d:/opt/nessus/sbin .
+docker cp 5843be44065d:/opt/nessus/var .
+docker cp 5843be44065d:/opt/nessus/etc .
 
 # build the docker data image locally (preserving the cert chain)
 docker build -t nessus-unlicensed-data .
