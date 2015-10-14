@@ -14,10 +14,11 @@
 # standard install location on the new container.
 # 
 # 
-if [ ! -f /opt/nessus-persist/nessus/var ]; then
-    /bin/cp -a /opt/nessus /opt/nessus-persist
+if [ ! -f /opt/nessus-data/nessus/var ]; then
+    /bin/cp -a /opt/nessus /opt/nessus-data
     /bin/rm -rf /opt/nessus
 fi
 
-/bin/ln -s /opt/nessus-persist/nessus /opt/nessus
+#create soft link to the nessus-data image
+/bin/ln -s /opt/nessus-data/nessus /opt/nessus
 /opt/nessus/sbin/nessusd
