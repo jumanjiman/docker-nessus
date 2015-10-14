@@ -38,13 +38,13 @@ Create the image, but don't run it - the data is needed locally.
 Check it.  You should see something like this:
 
 ```shell
-[root@localhost docker-nessus]# docker create --name nessus-unlicensed sometheycallme/docker:latest true
+[root@localhost docker-nessus]# docker create --name nessus-unlicensed sometheycallme/docker-nessus:latest true
 5843be44065dcd0bb8f295a8dc19e1fb94c2989ad8d8c27c4912f6cbf9449a20
 
 
 [root@localhost docker-nessus]# docker ps -a
 CONTAINER ID        IMAGE                                      COMMAND             CREATED             STATUS              PORTS               NAMES
-5843be44065d        sometheycallme/docker-nessus-data:latest   "true"              23 seconds ago                                              nessus-unlicensed-data   
+5843be44065d        sometheycallme/docker-nessus:latest   "true"              23 seconds ago                                              nessus-unlicensed   
 [root@localhost docker-nessus]#
 ```
 
@@ -74,14 +74,13 @@ docker build -t nessus-unlicensed-data .
 
 docker images
 
-# find and remove the docker container ID for docker-unlicensed
-# we will re-use the name
+# find and remove the docker container ID created to copy data
 
 docker ps -a
-docker rm docker-unlicensed 
+docker rm 5843be44065d
 ```
 
-<b>4)Build Nessus Unlicensed - with separate volume</b>
+<b>4)Build Nessus Unlicensed - with a separate volume</b>
 
 ```shell
 
