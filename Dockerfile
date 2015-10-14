@@ -27,9 +27,6 @@ RUN (yum -y --nogpgcheck localinstall /tmp/Nessus-6.4.3-es6.x86_64.rpm || \
     yum -y --nogpgcheck localinstall /tmp/Nessus-6.4.3-es6.x86_64.rpm) && \
     yum clean all
 
-ADD ./startup.sh /root/startup.sh
-
 # Start Nessus
-# ENTRYPOINT ["/opt/nessus/sbin/nessus-service"]
+ENTRYPOINT ["/opt/nessus/sbin/nessus-service"]
 EXPOSE 8834
-CMD ["/bin/bash", "/root/startup.sh"]
