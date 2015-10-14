@@ -3,12 +3,13 @@
 [![Circle CI](https://circleci.com/gh/cleanerbot/docker-nessus.png?circle-token=5d84cd337864c33f062f57aafd2854771777759d)](https://circleci.com/gh/sometheycallme/docker-nessus/tree/master 'View CI builds')
 
 Project URL: https://github.com/cleanerbot/docker-nessus
+
 Docker registry: https://registry.hub.docker.com/u/sometheycallme/docker-nessus
 
 
 # Procedures
 
-<i>updated 20151010</i>
+<i>updated 20151014</i>
 
 ### Intro
 
@@ -18,7 +19,7 @@ In order to preserve the certificate chaining in the data-volume, you need to bu
 
 ### Build Steps
 
-<b>1) Clone the [docker-nessus](https://github.com/cleanerbot/docker-nessus) from github locally
+<b>1) Clone the [docker-nessus](https://github.com/cleanerbot/docker-nessus) from github locally</b>
 
 ```git clone git@github.com:cleanerbot/docker-nessus.git```
 
