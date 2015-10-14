@@ -14,61 +14,96 @@ Docker registry: https://registry.hub.docker.com/u/sometheycallme/docker-nessus
 
 Docker Nessus runs with the Nessus daemon as an image, and Nessus data ```/opt/nessus``` in a separate data image.
 
-It is entirely possible to change the docker build commands to run everything in a single image / container.  The preference for our build purposes was to create a data image / container such that rules, templates, policies, user information, and licensing can be preserved between upgrades.
+In order to preserve the certificate chaining in the data-volume, you need to build the nessus-data file locally.
 
-### Steps
+### Build Steps
 
-<b>1) Pull the [data container]((https://hub.docker.com/r/sometheycallme/docker-nessus-data/), and [nessusd container](https://hub.docker.com/r/sometheycallme/docker-nessus/) </b>
-
-```docker pull sometheycallme/docker-nessus-data```
-
-```docker pull sometheycallme/docker-nessus```
-
-
-Or if you prefer build the images from the git repo
-
-git clone the [repo](https://github.com/cleanerbot/docker-nessus)
+<b>1) Clone the [docker-nessus](https://github.com/cleanerbot/docker-nessus) from github locally
 
 ```git clone git@github.com:cleanerbot/docker-nessus.git```
 
-Create the data volume image and build the nessusd image
+<b>2) Pull the [docker-nessus](https://hub.docker.com/r/sometheycallme/docker-nessus) image</b>
+
+```docker pull sometheycallme/docker-nessus```
+
+Check that the image is there:
+
+```docker images```
+
+Create the image, but don't run it - the data is needed locally.
+
+```docker create --name nessus-unlicensed sometheycallme/docker-nessus:latest true```
+
+Check it.  You should see something like this:
 
 ```shell
-# in the nessus-data folder of the repository
-cd /docker-nessus/nessus-data
-docker build .
-# replace IMAGE[:TAG] with nessus-data 
-# use your registryhost/username
-docker tag IMAGE[:TAG] [REGISTRYHOST/][USERNAME/]NAME[:TAG]
-docker create --name nessus-data <nessus-data-image-name> true
+[root@localhost docker-nessus]# docker create --name nessus-unlicensed sometheycallme/docker:latest true
+5843be44065dcd0bb8f295a8dc19e1fb94c2989ad8d8c27c4912f6cbf9449a20
 
-# in the root of the repository
 
-cd ..
-docker build .
-# replace IMAGE[:TAG] with nessus-unlicensed 
-# use your registryhost/username 
-docker tag IMAGE[:TAG] [REGISTRYHOST/][USERNAME/]NAME[:TAG]
-
-# Run it (unlicensed)
-docker run -d --name nessus-unlicensed -p 8834:8834 --mac-address 02:42:ac:11:00:01 --volumes-from nessus-data
+[root@localhost docker-nessus]# docker ps -a
+CONTAINER ID        IMAGE                                      COMMAND             CREATED             STATUS              PORTS               NAMES
+5843be44065d        sometheycallme/docker-nessus-data:latest   "true"              23 seconds ago                                              nessus-unlicensed-data   
+[root@localhost docker-nessus]#
 ```
 
-<b>2) Start the container running with static mac assigned ```nessus-unlicensed```</b>
+<b>3) Copy the needed configuration items and create the volume</b>
 
-if you build the image from the repo - use the tags you created (or hash)
+```shell
 
-IMPORTANT: provide a unique static unicast MAC
+# go into the local repo
+cd docker-nessus
 
-Name the image ```nessus-unlicensed```
+# go into the nessus data volume
+cd nessus-data
+
+# copy over needed CI's from the created image
+docker cp docker-unlicensed:/opt/nessus/sbin .
+docker cp docker-unlicensed:/opt/nessus/var .
+docker cp docker-unlicensed:/opt/nessus/etc .
+
+# build the docker data image locally (preserving the cert chain)
+docker build -t nessus-unlicensed-data .
+
+# you will see "Sending build context to Docker daemon <snip>" 
+# and other build artifacts
+# check the images
+
+docker images
+
+# find and remove the docker container ID for docker-unlicensed
+# we will re-use the name
+
+docker ps -a
+docker rm docker-unlicensed 
+```
+
+<b>3)Build Nessus Unlicensed - with separate volume</b>
+
+```shell
+
+# provide a unique unicast mac-address and remember it
+
+docker run -d --name nessus-unlicensed -p 8834:8834 --mac-address 02:42:ac:11:00:01 --volumes-from nessus-unlicensed-data sometheycallme/docker-nessus
+
+# check to see it's running
+
+[root@localhost docker-nessus]# docker ps
+CONTAINER ID        IMAGE                                 COMMAND                CREATED             STATUS              PORTS                    NAMES
+26dd094c2228        sometheycallme/docker-nessus:latest   "/opt/nessus/sbin/ne   12 minutes ago      Up 12 minutes       0.0.0.0:8834->8834/tcp   nessus-unlicensed 
+
+```
 
 
-```docker run -d --name nessus-unlicensed -p 8834:8834 --mac-address 02:42:ac:11:00:01 --volumes-from nessus-data sometheycallme/docker-nessus```
-
+### Licensing Steps and saving the build
 
 <b>3) Add the license to the running nessus-unlicensed container</b>
 
-You can use the [Nessus CLI](http://static.tenable.com/documentation/nessus_v6_command_line_reference.pdf) for offline registration or simply provide the unique key in the Web UI after Nessus starts.  Either way you will need to register.
+You can use the [Nessus CLI](http://static.tenable.com/documentation/nessus_v6_command_line_reference.pdf) for offline registration or simply provide the unique key in the Web UI after Nessus starts.  
+
+We used the Web UI.  (https://<yournessushost>:8834)
+
+Either way you will need to register.
 
 
 <b>4) Stop the container and commit the changes </b>
@@ -100,26 +135,11 @@ Suppliy the SAME unique unicast mac-address for that you supplied in step 2.  Fo
 
 ```docker run -d --name nessus-unlicensed -p 8834:8834 --mac-address 02:42:ac:11:00:01 --volumes-from nessus-data sometheycallme/docker-nessus```
 
-<b>6) Creating a production container</b>
-
-Once this container is created it would need to be usable internally.  Export the container, import the container, and push to a private docker registry for internal use only.
-
-obviously, name the tarball and ensure quay is setup.
-
-```
-docker export <tarball_name>
-docker import <tarball_name>
-docker push <quay.io>
-```
 
 
+### Existing Nessus installations
 
-# Migrating Nessus Configs
-
-In order to preserve pre-existing enterprise configurations, export the required data from an already running (not containerized) Nessus scanner implementations.
-
-
-### Backup
+These procedures cover the data necessary to migrate existing nessus configurations into the data volume, similar to the procedures outlined above.
 
 
 To backup your existing Nessus (not containerized) please do the following: 
@@ -164,11 +184,5 @@ You can also refer to below guides for Nessus 6.4.X :
 
 [Nessus CLI Reference](https://static.tenable.com/documentation/nessus_6.4_command_line_reference.pdf)
 
-### Docker data volume
-
-Untar the files (preserving the file paths) into the sometheycallme/docker-nessus/nessus-data folder.
 
 
-Then Add the following to the Dockerfile in the sometheycallme/docker-nessus/nessus-data folder
-
-ONBUILD COPY . /
