@@ -78,6 +78,10 @@ docker images
 
 docker ps -a
 docker rm 5843be44065d
+
+# create the new image with data copied over from nessusd.
+
+docker create docker create --name nessus-unlicensed-data nessus-unlicensed-data true
 ```
 
 <b>4)Build Nessus Unlicensed - with a separate volume</b>
