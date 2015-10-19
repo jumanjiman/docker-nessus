@@ -139,7 +139,7 @@ nessus                        licensed            d05e0a602768        7 minutes 
 
 Suppliy the SAME unique unicast mac-address for that you supplied in step 2.  For example, we used ```02:42:ac:11:00:01``` for our procedures.
 
-```docker run -d --name nessus-unlicensed -p 8834:8834 --mac-address 02:42:ac:11:00:01 --volumes-from nessus-data sometheycallme/docker-nessus```
+```docker run -d --name nessus-licensed -p 8834:8834 --mac-address 02:42:ac:11:00:01 --volumes-from nessus-unlicensed-data nessus```
 
 
 
