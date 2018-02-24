@@ -33,4 +33,4 @@ make
 ```
 To run the newly created container
 
-For details see the SOP.md that captures previous steps and ideas for building the image.
+For details see the PROCEDURES.md that captures previous steps and ideas for building the image.
