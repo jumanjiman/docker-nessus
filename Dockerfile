@@ -24,11 +24,16 @@ RUN yum -y update \
 # The above DL will only pull the PHP page (logon wall)
 # you need to pull the rpm locally
 
-COPY Nessus-6.4.3-es6.x86_64.rpm /tmp/
+COPY Nessus-7.0.2/Nessus-7.0.2-es5.x86_64.rpm /tmp/
 # run the yum install twice as workaround for rpmdb checksum error with overlayfs
-RUN (yum -y --nogpgcheck localinstall /tmp/Nessus-6.4.3-es6.x86_64.rpm || \
-    yum -y --nogpgcheck localinstall /tmp/Nessus-6.4.3-es6.x86_64.rpm) && \
+RUN (yum -y --nogpgcheck localinstall /tmp/Nessus-7.0.2-es5.x86_64.rpm || \
+    yum -y --nogpgcheck localinstall /tmp/Nessus-7.0.2-es5.x86_64.rpm) && \
     yum clean all
+
+#COPY Nessus-6.4.3-es6.x86_64.rpm /tmp/
+#RUN (yum -y --nogpgcheck localinstall /tmp/Nessus-6.4.3-es6.x86_64.rpm || \
+#    yum -y --nogpgcheck localinstall /tmp/Nessus-6.4.3-es6.x86_64.rpm) && \
+#    yum clean all
 
 # Start Nessus
 ENTRYPOINT ["/opt/nessus/sbin/nessus-service"]

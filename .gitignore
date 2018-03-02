@@ -1,3 +1,6 @@
+/sbin
+/etc
+.idea
 nessus-data/var
 nessus-data/etc
 nessus-data/sbin
