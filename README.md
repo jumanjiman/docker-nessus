@@ -15,23 +15,13 @@ https://www.tenable.com/products/nessus/activation-code
 
 Here are a few useful things to know.
 
-1) BYOL
+1) <b>BYOL:</b> Register your product.  Save the image after registration.
 
-Register your product.  Save the image after registration.
+2) <b>Image:</b> Cleanerbot/docker-nessus installs Nessus in a single image, then copies the data over after a proper installation to a  data image.
 
-2) Image
+3) <b>Docker volumes:</b> When separating nessusd from the licensing-data you need to copy data over from the licensed image ```/sbin /var and /etc```  Nessus likes to pull in a bunch of plugins after you register, on the order of 5GB
 
-Cleanerbot/docker-nessus installs Nessus in a single image, then copies the data over after a proper installation to a data image.
-
-3) Docker volumes
-
-When separating nessusd from the licensing-data you need to copy data over from the licensed image ```/sbin /var and /etc```
-
-Nessus likes to pull in a bunch of plugins after you register, on the order of 5GB
-
-4) Mac-address
-
-Use the same Mac address during run-time for license you apply to be respected by Nessus.
+4) <b>Mac-address:</b> Use the same Mac address during run-time for license you apply to be respected by Nessus.
 
 
 ### Makefile
