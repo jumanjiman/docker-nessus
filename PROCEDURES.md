@@ -3,9 +3,7 @@ Procedures for testing out a Nessus 7.0.2 locally image install/build.
 ### step 1
 Manually download the rpm into a /tmp folder.
 
-<img width="284" alt="screen shot 2018-03-01 at 8 11 24 pm" src="https://user-images.githubusercontent.com/630113/36878401-d22806f2-1d8c-11e8-8a1b-c0efe47f9c3c.png">
-
-adjust the dockerfile to point to the locally downloaded rpm.
+Adjust the dockerfile to point to the locally downloaded rpm.
 
 ```
 COPY Nessus-7.0.2/Nessus-7.0.2-es5.x86_64.rpm /tmp/
