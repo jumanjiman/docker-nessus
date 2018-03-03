@@ -29,17 +29,6 @@ Nessus likes to pull in a bunch of plugins after you register, on the order of 5
 Use the same Mac address during run-time for license you apply to be respected by Nessus.
 
 
-### Preserving an existing Nessus install
-
-Another way to do it:
-@jcwx has some nice procedures written up on how to preserve your existing Nessus and build a docker image.
-
-https://github.com/jcwx/docker-nessus
-
-There are other images out there too:
-https://hub.docker.com/r/treadie/nessus/
-
-
 ### Makefile
 
 Create a Docker-Nessus Daemon, and Docker-Nessus-Licensed-Data Volume.
@@ -71,3 +60,16 @@ make
 To run the newly created container
 
 For details see the PROCEDURES.md that captures previous steps and ideas for building the image.
+
+
+### Preserving an existing Nessus install
+
+Another way to do it:
+@jcwx has some nice procedures written up on how to preserve your existing Nessus and build a docker image.
+
+https://github.com/jcwx/docker-nessus
+
+There are other images out there too:
+https://hub.docker.com/r/treadie/nessus/
+
+
