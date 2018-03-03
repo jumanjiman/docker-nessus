@@ -1,12 +1,12 @@
-Procedures for Nessus 7.0.2
-
-First, I downloaded the latest RPM, created a new folder to hold the rpm in the repo.
+Procedures for testing out a Nessus 7.0.2 locally image install/build.
 
 ### step 1
+Manually download the rpm into a /tmp folder.
 
 <img width="284" alt="screen shot 2018-03-01 at 8 11 24 pm" src="https://user-images.githubusercontent.com/630113/36878401-d22806f2-1d8c-11e8-8a1b-c0efe47f9c3c.png">
 
-adjusted the dockerfile to point to the new image.
+adjust the dockerfile to point to the locally downloaded rpm.
+
 ```
 COPY Nessus-7.0.2/Nessus-7.0.2-es5.x86_64.rpm /tmp/
 # run the yum install twice as workaround for rpmdb checksum error with overlayfs
