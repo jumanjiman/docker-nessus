@@ -29,7 +29,7 @@ Nessus likes to pull in a bunch of plugins after you register, on the order of 5
 Use the same Mac address during run-time for license you apply to be respected by Nessus.
 
 
-### Preserving and existing Nessus install
+### Preserving an existing Nessus install
 
 Another way to do it:
 @jcwx has some nice procedures written up on how to preserve your existing Nessus and build a docker image.
