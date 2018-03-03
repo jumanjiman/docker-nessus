@@ -44,8 +44,6 @@ https://hub.docker.com/r/treadie/nessus/
 
 Create a Docker-Nessus Daemon, and Docker-Nessus-Licensed-Data Volume.
 
-Note: This still does not get past the "download plugins" feature of Nessus startup.
-
 ### Make it simple
 
 Thanks @seccubus !
