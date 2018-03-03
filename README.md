@@ -8,35 +8,36 @@ Docker registry: https://registry.hub.docker.com/u/sometheycallme/docker-nessus
 
 # Docker Nessus
 
-Here are a few things you need to know.
+Here are a few useful things to know.
 
 1) BYOL
 
-You need to register your product.  Then you need to save the image after registration.
+Register your product.  Save the image after registration.
 
 2) Image
 
-As @Passe12345 pointed out, running everything in a single container works just fine.
+Cleanerbot/docker-nessus installs Nessus in a single image, then copies the data over after a proper installation to a data image.
 
 3) Docker volumes
 
-When separating nessusd from the licensing-data there it isn't quite working right.
+When separating nessusd from the licensing-data you need to copy data over from the licensed image ```/sbin /var and /etc```
 
-Nessus likes to pull in a bunch of plugins after you register.  We haven't quite figured out how to get Nessus to like separating data volumes (licensing) from the UI/Daemon.   So unfortunatley, when using a separate docker data volume image, this hangs after registration.
-https://github.com/cleanerbot/docker-nessus/issues/20
+Nessus likes to pull in a bunch of plugins after you register, on the order of 5GB
 
 4) Mac-address
 
-You have to use the same Mac address during run-time for license you apply to be respected by Nessus.
+Use the same Mac address during run-time for license you apply to be respected by Nessus.
 
 
 ### Preserving and existing Nessus install
 
 Another way to do it:
-
-@jcwx has some great procedures written up on how to preserve your existing Nessus and build a docker image.
+@jcwx has some nice procedures written up on how to preserve your existing Nessus and build a docker image.
 
 https://github.com/jcwx/docker-nessus
+
+There are other images out there too:
+https://hub.docker.com/r/treadie/nessus/
 
 
 ### Makefile
