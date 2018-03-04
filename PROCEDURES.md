@@ -1,4 +1,4 @@
-Step by step procedures for building and testing out a Nessus.
+Step by step procedures for building and testing out Nessus.
 
 ### step 1
 
@@ -53,6 +53,7 @@ copy data from the newly created ```nessus-licensed``` for the ```nessus-license
 
 ```
 cd nessus-data
+
 docker cp nessus-licensed:/opt/nessus/sbin .
 docker cp nessus-licensed:/opt/nessus/var .
 docker cp nessus-licensed:/opt/nessus/etc .
@@ -65,6 +66,17 @@ now that we have the data, create the nessus-licensed-data image
 ```
 docker build -t nessus-licensed-data .
 ```
+
+remove the copied data
+
+```
+cd nessus-data
+
+rm -rf sbin
+rm -rf var
+rm -rf etc
+```
+
 
 ### step 7
 
