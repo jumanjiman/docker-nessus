@@ -1,43 +1,29 @@
-Procedures for testing out a Nessus 7.0.2 locally image install/build.
+Step by step procedures for building and testing out a Nessus.
 
 ### step 1
-Manually download the rpm into a /tmp folder.
 
-Adjust the dockerfile to point to the locally downloaded rpm.
+Clone project down locally
 
 ```
-COPY Nessus-7.0.2/Nessus-7.0.2-es5.x86_64.rpm /tmp/
-# run the yum install twice as workaround for rpmdb checksum error with overlayfs
-RUN (yum -y --nogpgcheck localinstall /tmp/Nessus-7.0.2-es5.x86_64.rpm || \
-    yum -y --nogpgcheck localinstall /tmp/Nessus-7.0.2-es5.x86_64.rpm) && \
-    yum clean all
+git clone git@github.com:cleanerbot/docker-nessus.git
+
+docker pull sometheycallme/docker-nessus 
 ```
+
+<img width="875" alt="screen shot 2018-03-04 at 1 27 54 pm" src="https://user-images.githubusercontent.com/630113/36948962-339c4d6a-1fb0-11e8-9219-8944428a63f7.png">
+
 
 ### step 2
 
- I build the image locally.
+Run the image locally and name it nessus-unlicensed.
 
 ```
-cd ~/docker-nessus
-docker build -t nessus-unlicensed .
-
-### after it does it's build, check
-docker images
-nessus-unlicensed              latest              cc7c533368c4        12 hours ago        730MB
+docker run -d --name nessus-unlicensed -p 8834:8834 --mac-address 02:42:ac:11:00:01 sometheycallme/docker-nessus
 ```
 
 ### step 3
 
- I run the image and license it via the GUI.
-
-```
-docker run -d --name nessus7 -p 8834:8834 --mac-address 02:42:ac:11:00:01  nessus-unlicensed
-```
-go to https://127.0.0.1:8834
-
-### step 4
-
-Put in your license key and create an account
+Go to https://127.0.0.1:8834 and license it.
 
 <img width="763" alt="screen shot 2018-03-01 at 8 23 46 am" src="https://user-images.githubusercontent.com/630113/36878577-9a5384c6-1d8d-11e8-9cca-e54d678f33b4.png">
 
@@ -45,26 +31,31 @@ Put in your license key and create an account
 
 <img width="520" alt="screen shot 2018-03-01 at 8 25 38 am" src="https://user-images.githubusercontent.com/630113/36878619-d508bc08-1d8d-11e8-95d3-c7499ffcd6ab.png">
 
-### step 5
+### step 4
 
 preserve the image data and now that it is licensed properly in /nessus-data
 
 ```
-docker stop nessus7
-docker commit nessus7 nessus-licensed
+docker stop nessus-unlicensed
+
+docker commit nessus-unlicensed nessus-licensed
 ```
 
-Notice unlicensed vs. licensed image sizes.
+Notice licensed image size is much larger.
 
-<img width="819" alt="screen shot 2018-03-02 at 6 37 15 pm" src="https://user-images.githubusercontent.com/630113/36927020-df49070c-1e48-11e8-9712-9e28041e5365.png">
+<img width="384" alt="screen shot 2018-03-04 at 1 26 32 pm" src="https://user-images.githubusercontent.com/630113/36948971-5172ff5a-1fb0-11e8-9894-e82662191542.png">
 
-In this procedure, we call it nessus-unlicensed.  In my local images I just called it nessus.
+
+### step 5
+
+copy data from the newly created ```nessus-licensed``` for the ```nessus-licensed-data image```
 
 
 ```
 cd nessus-data
 docker cp nessus-licensed:/opt/nessus/sbin .
-docker cp nessus-licensed:/opt/nessus/sbin .
+docker cp nessus-licensed:/opt/nessus/var .
+docker cp nessus-licensed:/opt/nessus/etc .
 ```
 
 ### step 6
@@ -77,12 +68,12 @@ docker build -t nessus-licensed-data .
 
 ### step 7
 
-Run the newly created nessus7 image with ```--volumes-from nessus-licensed-data```
+Run the newly created image with ```--volumes-from nessus-licensed-data```
 
 
 ```
 docker create --name nessus-licensed-data nessus-licensed-data true
-docker run -d --name nessus72 -p 8834:8834 --mac-address 02:42:ac:11:00:01  --volumes-from nessus-licensed-data nessus7
+docker run -d --name nessus702 -p 8834:8834 --mac-address 02:42:ac:11:00:01  --volumes-from nessus-licensed-data sometheycallme/docker-nessus
 ```
 	
 Works to preserve the data needed for ```--volumes-from nessus-licensed-data```
