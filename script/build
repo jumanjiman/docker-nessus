@@ -8,8 +8,9 @@ echo
 echo "Build Nessus image."
 docker build $options -t sometheycallme/docker-nessus nessus-app/
 
+echo
 echo "Show image sizes."
-docker images | egrep '^nessus\b' | sort
+docker images | grep -E '^sometheycallme/docker-nessus\b' | sort
 
 echo
 echo "WARN: you should docker tag the docker-nessus image."
