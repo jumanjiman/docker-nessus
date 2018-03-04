@@ -1,0 +1,36 @@
+---
+# https://circleci.com/docs/docker
+version: 2
+jobs:
+  build:
+    docker:
+      # https://circleci.com/docs/2.0/executor-types/#using-docker
+      - image: docker:stable-git
+
+    working_directory: ~/workdir/
+
+    steps:
+      - setup_remote_docker
+
+      - checkout
+
+      - run:
+          name: Build the image
+          command: |
+            docker info
+            docker version
+            apk add --no-cache --no-progress bash
+            script/build
+
+      - run:
+          name: Test the image
+          command: |
+            script/test
+
+      - deploy:
+          name: Deploy from master branch
+          # yamllint disable rule:line-length
+          command: |
+            if [[ "${CIRCLE_BRANCH}" = master ]] && [[ -z "${CIRCLE_PR_NUMBER}" ]]; then
+              script/publish
+            fi
