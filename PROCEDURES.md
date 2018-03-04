@@ -7,7 +7,12 @@ Clone project down locally
 ```
 git clone git@github.com:cleanerbot/docker-nessus.git
 
+# Pull an already-built image...
 docker pull sometheycallme/docker-nessus 
+
+# ...or build and test locally.
+script/build
+script/test
 ```
 
 <img width="875" alt="screen shot 2018-03-04 at 1 27 54 pm" src="https://user-images.githubusercontent.com/630113/36948962-339c4d6a-1fb0-11e8-9219-8944428a63f7.png">

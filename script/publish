@@ -1,0 +1,26 @@
+#!/bin/bash
+set -eEu
+set -o pipefail
+
+. script/vars
+
+# These vars come from CircleCI project settings.
+readonly user="${user:-none}"
+readonly pass="${pass:-none}"
+
+# We already have a "latest" tag.
+# Give it a pessimistic tag, too.
+docker tag "${IMAGE_NAME}" "${IMAGE_NAME}:${IMAGE_TAG}"
+
+# Show all tags.
+docker images | grep -e "${IMAGE_NAME}" -e TAG
+
+# Publish to docker hub.
+if [[ "${user}" != none ]] && [[ "${pass}" != none ]]; then
+  docker login -u "${user}" -p "${pass}"
+  # Push the pessimistic tag.
+  docker push "${IMAGE_NAME}:${IMAGE_TAG}"
+  # Push the "latest" tag.
+  docker push "${IMAGE_NAME}"
+  docker logout
+fi

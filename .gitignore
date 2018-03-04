@@ -7,6 +7,9 @@ nessus-data/etc
 nessus-data/sbin
 .DS_Store
 
+# The vars file hold temp variables during build.
+script/vars
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]

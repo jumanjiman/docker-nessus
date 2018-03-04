@@ -1,16 +1,40 @@
 #!/bin/bash
-set -e
+set -eEu
+set -o pipefail
+
+GIT_REF="$(git describe --abbrev=7 --tags --always --dirty)"
+NESSUS_VERSION="7.0.2"
+
+cat > script/vars <<EOF
+declare -rx NESSUS_VERSION="${NESSUS_VERSION}"
+declare -rx GIT_REF="${GIT_REF}"
+declare -rx IMAGE_NAME="sometheycallme/docker-nessus"
+declare -rx IMAGE_TAG="${NESSUS_VERSION}-${GIT_REF}"
+EOF
+
+# shellcheck disable=SC1091
+. script/vars
 
 options="--rm"
-echo $@ | grep '\--no-cache' &> /dev/null && options="$options --no-cache" || :
+if echo "$@" | grep '\--no-cache' &> /dev/null; then
+  options="$options --no-cache"
+fi
 
 echo
 echo "Build Nessus image."
-docker build $options -t sometheycallme/docker-nessus nessus-app/
+# shellcheck disable=SC2086
+docker build $options \
+  -t "${IMAGE_NAME}" \
+  --build-arg NESSUS_VERSION="${NESSUS_VERSION}" \
+  nessus-app/
+
+echo
+echo "Tag the image with an alternate name for PROCEDURES.md"
+docker tag "${IMAGE_NAME}" "nessus-unlicensed"
 
 echo
 echo "Show image sizes."
-docker images | grep -E '^sometheycallme/docker-nessus\b' | sort
+docker images | grep -E "^${IMAGE_NAME}\\b" | sort
 
 echo
 echo "WARN: you should docker tag the docker-nessus image."

@@ -1,17 +1,33 @@
 #!/bin/bash
-set -ex -o pipefail
+set -eEu
+set -o pipefail
+
+. script/vars
+
+finish() {
+  declare -ri RC=$?
+
+  if [[ ${RC} -eq 0 ]]; then
+    echo OK
+  else
+    echo FAILED
+  fi
+}
+
+trap finish EXIT
+
+readonly CONTAINER_NAME=nessusd
 
 echo "Step1: Test for basic nessus install (we remove it in step 3)"
-docker run -t -i --entrypoint bash sometheycallme/docker-nessus -c "ls /opt/nessus/etc" | grep nessus
+docker run -t -i --entrypoint bash "${IMAGE_NAME}" -c "ls /opt/nessus/etc" | grep nessus
 
 
 echo "Step 2: Remove an existing nessus image (if its there) and run a new one mounting volumes"
-docker rm -f nessus || :
-docker run -d --name nessusd -p 8834:8834 --mac-address 02:42:ac:11:00:01 sometheycallme/docker-nessus
-echo
+docker rm -f "${CONTAINER_NAME}" || :
+docker run -d --name "${CONTAINER_NAME}" -p 8834:8834 --mac-address 02:42:ac:11:00:01 "${IMAGE_NAME}"
 
-# give nessus a few seconds to fully startup
+echo "Give nessus a few seconds to fully startup"
 sleep 3
 
 echo "Step3: Test that after the docker build - the Nessus D is actually running"
-docker logs nessusd | grep '^nessusd'
+docker logs nessusd | grep "^nessusd.*${NESSUS_VERSION}"

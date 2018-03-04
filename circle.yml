@@ -22,7 +22,4 @@ deployment:
     branch: master
     owner: cleanerbot
     commands:
-      - docker login -e ${mail} -u ${user} -p ${pass}
-      - docker tag sometheycallme/docker-nessus sometheycallme/docker-nessus:0.0.1-${CIRCLE_SHA1:0:7}
-      - docker push sometheycallme/docker-nessus:latest
-      - docker logout
+      - script/publish
