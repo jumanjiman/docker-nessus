@@ -1,6 +1,6 @@
 # http://tenable.com
 # https://index.docker.io/_/centos/
-FROM centos:latest
+FROM centos:7
 ENV NESSUS_VERSION="7.0.2"
 
 # https://github.com/sometheycallme
