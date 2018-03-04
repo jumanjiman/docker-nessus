@@ -27,6 +27,8 @@ Go to https://127.0.0.1:8834 and license it.
 
 <img width="763" alt="screen shot 2018-03-01 at 8 23 46 am" src="https://user-images.githubusercontent.com/630113/36878577-9a5384c6-1d8d-11e8-9cca-e54d678f33b4.png">
 
+<img width="384" alt="screen shot 2018-03-04 at 1 26 32 pm" src="https://user-images.githubusercontent.com/630113/36948971-5172ff5a-1fb0-11e8-9894-e82662191542.png">
+
 <img width="455" alt="screen shot 2018-03-01 at 8 24 03 am" src="https://user-images.githubusercontent.com/630113/36878574-96e1235c-1d8d-11e8-9f65-bfe20c402ae1.png">
 
 <img width="520" alt="screen shot 2018-03-01 at 8 25 38 am" src="https://user-images.githubusercontent.com/630113/36878619-d508bc08-1d8d-11e8-95d3-c7499ffcd6ab.png">
@@ -43,7 +45,6 @@ docker commit nessus-unlicensed nessus-licensed
 
 Notice licensed image size is much larger.
 
-<img width="384" alt="screen shot 2018-03-04 at 1 26 32 pm" src="https://user-images.githubusercontent.com/630113/36948971-5172ff5a-1fb0-11e8-9894-e82662191542.png">
 
 
 ### step 5
