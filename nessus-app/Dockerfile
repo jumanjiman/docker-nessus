@@ -11,21 +11,13 @@ RUN yum -y update \
       nss-util \
       bind-license \
       libssh2 \
-    && yum clean all
+      && \
+    yum clean all \
+      && \
+    rm -fr /var/cache/yum
 
-RUN set -x \
-  # Find the ID
-  && DOWNLOAD_ID=$(curl -ssl -o - "https://www.tenable.com/downloads/nessus" | sed -n -e 's/.*data-download-id="\([0-9]*\)".*data-file-name="\([a-zA-Z0-9_\.-]\+\-es7\.x86_64\.rpm\).*".*/\1/p') \
-  # Fetch Tenable's GPG key
-  && rpm --import https://static.tenable.com/marketing/RPM-GPG-KEY-Tenable \
-  # Fetch rpm
-  && curl -ssL -o /tmp/Nessus-${NESSUS_VERSION}-es7.x86_64.rpm \
-    "https://tenable-downloads-production.s3.amazonaws.com/uploads/download/file/${DOWNLOAD_ID}/Nessus-${NESSUS_VERSION}-es7.x86_64.rpm" \
-  # Install rpm and cleanup
-  && rpm -ivh /tmp/Nessus-${NESSUS_VERSION}-es7.x86_64.rpm \
-  && rm /tmp/Nessus-${NESSUS_VERSION}-es7.x86_64.rpm \
-  && yum clean all \
-  && rm -rf /var/cache/yum
+COPY install-nessus.sh /usr/sbin/
+RUN /usr/sbin/install-nessus.sh
 
 EXPOSE 8834
 CMD ["/opt/nessus/sbin/nessus-service"]
