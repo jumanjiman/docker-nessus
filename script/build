@@ -3,7 +3,7 @@ set -eEu
 set -o pipefail
 
 GIT_REF="$(git describe --abbrev=7 --tags --always --dirty)"
-NESSUS_VERSION="7.0.2"
+NESSUS_VERSION="7.0.3"
 
 cat > script/vars <<EOF
 declare -rx NESSUS_VERSION="${NESSUS_VERSION}"

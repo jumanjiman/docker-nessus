@@ -30,4 +30,4 @@ echo "Give nessus a few seconds to fully startup"
 sleep 3
 
 echo "Step3: Test that after the docker build - the Nessus D is actually running"
-docker logs nessusd | grep "^nessusd.*${NESSUS_VERSION}"
+docker logs nessusd | grep "^nessus.*${NESSUS_VERSION}"

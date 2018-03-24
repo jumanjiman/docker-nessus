@@ -15,9 +15,12 @@ RUN yum -y update \
     yum clean all \
       && \
     rm -fr /var/cache/yum
-
-COPY install-nessus.sh /usr/sbin/
-RUN /usr/sbin/install-nessus.sh
+COPY tenable-2048.gpg /tmp
+COPY Nessus-7.0.3-es7.x86_64.rpm /tmp
+RUN rpm --import /tmp/tenable-2048.gpg
+RUN (yum -y localinstall /tmp/Nessus-7.0.3-es7.x86_64.rpm || \
+    yum -y localinstall /tmp/Nessus-7.0.3-es7.x86_64.rpm) && \
+    yum clean all
 
 EXPOSE 8834
 CMD ["/opt/nessus/sbin/nessus-service"]
