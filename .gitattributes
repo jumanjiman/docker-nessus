@@ -10,6 +10,14 @@
 #
 ######################################################################
 
+# By default, all files are text and retain LF endings, even on Windows.
+# https://help.github.com/articles/dealing-with-line-endings
+* text eol=lf
+
+# RPM files are binary, not text.
+# "binary" is an alias for "-text -diff".
+*.rpm binary
+
 # Use this file to configure core.whitespace checks.
 # https://git-scm.com/docs/gitattributes#_checking_whitespace_errors
 # https://git-scm.com/docs/git-config#git-config-corewhitespace
