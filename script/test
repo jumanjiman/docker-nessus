@@ -2,25 +2,16 @@
 set -eEu
 set -o pipefail
 
+. script/bootstrap
 . script/vars
-
-finish() {
-  declare -ri RC=$?
-
-  if [[ ${RC} -eq 0 ]]; then
-    echo OK
-  else
-    echo FAILED
-  fi
-}
-
-trap finish EXIT
 
 readonly CONTAINER_NAME=nessusd
 
+echo "Run various file checks"
+pre-commit run --all-files --verbose
+
 echo "Step1: Test for basic nessus install (we remove it in step 3)"
 docker run -t -i --entrypoint bash "${IMAGE_NAME}" -c "ls /opt/nessus/etc" | grep nessus
-
 
 echo "Step 2: Remove an existing nessus image (if its there) and run a new one mounting volumes"
 docker rm -f "${CONTAINER_NAME}" || :

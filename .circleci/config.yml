@@ -15,6 +15,12 @@ jobs:
       - checkout
 
       - run:
+          name: Bootstrap the test environment
+          command: |
+            apk add --no-cache --no-progress bash py2-pip python2-dev
+            script/bootstrap
+
+      - run:
           name: Build the image
           command: |
             docker info
