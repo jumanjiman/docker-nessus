@@ -8,7 +8,7 @@ Clone project down locally
 git clone git@github.com:cleanerbot/docker-nessus.git
 
 # Pull an already-built image...
-docker pull sometheycallme/docker-nessus 
+docker pull sometheycallme/docker-nessus
 
 # ...or build and test locally.
 script/build
@@ -93,7 +93,7 @@ Run the newly created image with ```--volumes-from nessus-licensed-data```
 docker create --name nessus-licensed-data nessus-licensed-data true
 docker run -d --name nessus702 -p 8834:8834 --mac-address 02:42:ac:11:00:01  --volumes-from nessus-licensed-data sometheycallme/docker-nessus
 ```
-	
+
 Works to preserve the data needed for ```--volumes-from nessus-licensed-data```
 
 <img width="444" alt="screen shot 2018-03-01 at 8 32 11 pm" src="https://user-images.githubusercontent.com/630113/36879015-aa5f1be4-1d8f-11e8-9058-4471d92a17ed.png">

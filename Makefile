@@ -17,12 +17,12 @@ nessus :
 	docker run -d --name nessus-licensed -p $(NESSUS_PORT):8834 --mac-address $(UNIQUE_MAC) --volumes-from nessus-unlicensed-data nessus:licensed
 	@echo "Nessus is running at https://127.0.0.1:$(NESSUS_PORT)"
 
-stop : 
+stop :
 	docker kill $$(docker ps|grep 'nessus:licensed')
 	@echo "Nessus stopped"
 
 
-clean_unlic : 
+clean_unlic :
 	(docker ps -a |grep nessus | awk '{ print $$1 }'| xargs docker kill) || true
 	(docker ps -a |grep nessus | awk '{ print $$1 }'| xargs docker rm) || true
 	docker rm /nessus-unlicensed || true
@@ -43,7 +43,7 @@ unlicensed : clean_unlic
 	@echo "You can get an activation code from https://www.tenable.com/products/nessus/nessus-plugins/obtain-an-activation-code"
 	@echo "When you are done, run 'make licensed' to continue"
 
-clean_lic : 
+clean_lic :
 	docker rmi nessus:licensed || true
 
 licensed : clean_lic

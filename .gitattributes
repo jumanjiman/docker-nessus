@@ -1,0 +1,15 @@
+######################################################################
+# gitattributes(5) describes the format and usage of this file.
+#
+# References:
+# https://www.kernel.org/pub/software/scm/git/docs/gitattributes.html
+# http://git-scm.com/book/ch7-2.html
+#
+# Note: When more than one pattern matches the path,
+#       a later line overrides an earlier line.
+#
+######################################################################
+
+# Use this file to configure core.whitespace checks.
+# https://git-scm.com/docs/gitattributes#_checking_whitespace_errors
+# https://git-scm.com/docs/git-config#git-config-corewhitespace

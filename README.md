@@ -66,5 +66,3 @@ https://github.com/jcwx/docker-nessus
 
 There are other images out there too:
 https://hub.docker.com/r/treadie/nessus/
-
-
