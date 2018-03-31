@@ -7,18 +7,26 @@ set -o pipefail
 
 readonly CONTAINER_NAME=nessusd
 
+echo
 echo "Run various file checks"
 pre-commit run --all-files --verbose
 
+echo
 echo "Step1: Test for basic nessus install (we remove it in step 3)"
+docker run --rm -ti --entrypoint bash "${IMAGE_NAME}" -c "rpm -qi Nessus"
 docker run -t -i --entrypoint bash "${IMAGE_NAME}" -c "ls /opt/nessus/etc" | grep nessus
 
+echo
 echo "Step 2: Remove an existing nessus image (if its there) and run a new one mounting volumes"
-docker rm -f "${CONTAINER_NAME}" || :
+docker rm -f "${CONTAINER_NAME}" &> /dev/null || :
 docker run -d --name "${CONTAINER_NAME}" -p 8834:8834 --mac-address 02:42:ac:11:00:01 "${IMAGE_NAME}"
+echo "[INFO] Launched ${CONTAINER_NAME}"
 
+echo
 echo "Give nessus a few seconds to fully startup"
 sleep 3
 
+echo
 echo "Step3: Test that after the docker build - the Nessus D is actually running"
-docker logs nessusd | grep "^nessus.*${NESSUS_VERSION}"
+docker logs "${CONTAINER_NAME}" | grep "^nessus.*${NESSUS_VERSION}"
+echo
