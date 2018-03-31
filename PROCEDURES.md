@@ -1,5 +1,21 @@
 Step by step procedures for building and testing out Nessus.
 
+## Update the RPM
+
+It is difficult to reliably automate the step to download the RPM.
+The endpoint changes occasionally, so for now we download
+the RPM manually and add it to the git repo.
+
+To update the RPM version:
+
+* Manually download it and add it to the git repo at
+  `nessus-app/Nessus-${NESSUS_VERSION}.x86_64.rpm`.
+
+* Update `script/build` to reflect the new version.
+
+
+## Build and test
+
 ### step 1
 
 Clone project down locally
