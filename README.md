@@ -30,7 +30,7 @@ Create a Docker-Nessus Daemon, and Docker-Nessus-Licensed-Data Volume.
 
 ### Make it simple
 
-Thanks @seccubus !
+Thanks @seccubus and @jumanjiman !
 
 ### Step 1: simply run
 
